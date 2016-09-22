@@ -2,7 +2,7 @@
 
 This project uses `json-server`, `bootstrap`, and `angular 2` as a RESTful server and client.  There are unit and component and service tests composed for each of the files.
 
-This is a work in progress, pulled from my original samples back in Febrary 2016 during the early betas and release candidates.
+This is a work in progress, pulled from my original samples back in Febrary 2016 during the early betas and release candidates. The tests aren't ideal - not as thought out yet as I'd like, but show what is possible.
 
 ## Setup
 
