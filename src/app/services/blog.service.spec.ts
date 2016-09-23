@@ -11,7 +11,7 @@ import {
 import {ResponseOptions} from '@angular/http';
 import {MockBackend, MockConnection} from '@angular/http/testing';
 import {BlogEntry} from '../domain/blog-entry';
-import {BlogService} from './blog-service';
+import {BlogService} from './blog.service';
 
 describe('Blog Service', () => {
   let testBed: TestBed;

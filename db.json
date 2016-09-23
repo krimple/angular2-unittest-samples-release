@@ -1,21 +1,15 @@
 {
   "blogs": [
     {
-      "title": "Learning to fly",
-      "contentRendered": "<p><em>By the way, which one is Pink?</em></p>\n",
-      "contentMarkdown": "_By the way, which one is Pink?_",
-      "id": 6
-    },
-    {
       "title": "Blue Trane",
       "contentRendered": "<h1 id=\"john-coletrane\">John Coletrane</h1>\n<p>Is a jazz legend.</p>\n",
       "contentMarkdown": "# John Coletrane\n\nIs a jazz legend.\n",
       "id": 7
     },
     {
-      "title": "asldfjasdfkj",
-      "contentRendered": "<p>asdflkasdjfsa</p>\n",
-      "contentMarkdown": "asdflkasdjfsa",
+      "title": "lasdfkjasldkfj",
+      "contentRendered": "<p>dasfd</p>\n",
+      "contentMarkdown": "dasfd",
       "id": 8
     }
   ]

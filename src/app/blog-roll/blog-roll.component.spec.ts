@@ -2,13 +2,13 @@ import {
   TestBed,
   ComponentFixture, getTestBed, async
 } from '@angular/core/testing';
-import {BlogRollComponent} from './blog-roll';
-import {BlogService} from '../services/blog-service';
-import {MarkdownService} from '../services/markdown-service';
+import {BlogRollComponent} from './blog-roll.component';
+import {BlogService} from '../services/blog.service';
+import {MarkdownService} from '../services/markdown.service';
 import {FormsModule} from "@angular/forms";
 import {HttpModule, XHRBackend, ResponseOptions, Response} from "@angular/http";
 import {MockBackend, MockConnection} from "@angular/http/testing";
-import {BlogEntryFormComponent} from "../blog-entry-form/blog-entry-form";
+import {BlogEntryFormComponent} from "../blog-entry-form/blog-entry-form.component";
 
 let mockResponse = {
         id: 26,

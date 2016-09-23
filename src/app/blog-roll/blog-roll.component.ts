@@ -1,53 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {BlogEntry} from '../domain/blog-entry';
-import {BlogService} from '../services/blog-service';
-import {MarkdownService} from '../services/markdown-service';
+import {BlogService} from '../services/blog.service';
+import {MarkdownService} from '../services/markdown.service';
 
 @Component({
+    selector: 'blog-roll',
     providers: [BlogService, MarkdownService],
-    template: `
-   <div class="row">
-     <div id="blog-editor-panel" class="col-sm-12" *ngIf="blog">
-      <blog-entry-form [blog]="blog" (submitted)="saveOrUpdate($event)"></blog-entry-form> 
-     </div>
-
-      <div id="blog-roll-panel" class="col-sm-12" *ngIf="!editing">
-      <p>
-        <a (click)="newBlogEntry()">
-           <i class="glyphicon glyphicon-plus-sign">
-             Add...
-           </i>
-         </a>
-      </p>
-      <table class="table table-bordered table-condensed">
-        <tr>
-          <th>Actions</th>
-          <th>Title</th>
-          <th>Content</th>
-        </tr>
-        <tr class="rows" *ngFor="let blog of blogs">
-         <td>
-            <a href="#" (click)="editBlogEntry(blog)">
-              <i class="glyphicon glyphicon-edit"></i>
-            </a>
-          &nbsp;
-            <a href="#" (click)="deleteBlogEntry(blog)">
-              <i class="glyphicon glyphicon-remove"></i>
-            </a>
-         </td>
-         <td class="table-cell">
-            <span class="title">{{ blog.title }}</span>
-         </td>
-         <td>
-           <div [innerHtml]="blog.contentMarkdown"></div>
-         </td>
-        </tr>
-      </table>
-      </div>
-  </div>
-    `,
-    selector: 'blog-roll'
+    templateUrl: 'blog-roll.component.html',
 })
 export class BlogRollComponent implements OnInit {
     blogs: Array<BlogEntry>;
@@ -67,6 +27,7 @@ export class BlogRollComponent implements OnInit {
 
     refresh() {
         this.blog = undefined;
+        this.editing = false;
         this.loadBlogEntries();
     }
 
@@ -89,8 +50,8 @@ export class BlogRollComponent implements OnInit {
     }
 
     newBlogEntry() {
-        this.editing = true;
         this.blog = new BlogEntry('', '', '', undefined);
+        this.editing = true;
     }
 
     editBlogEntry(blog: BlogEntry) {

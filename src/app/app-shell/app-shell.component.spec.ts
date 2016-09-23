@@ -1,15 +1,15 @@
-import {AppShellComponent} from './app-shell';
+import {AppShellComponent} from './app-shell.component';
 import {
     async,
     TestBed,
     getTestBed,
     ComponentFixture
 } from '@angular/core/testing';
-import {BlogService} from '../services/blog-service';
-import {BlogRollComponent} from '../blog-roll/blog-roll';
+import {BlogService} from '../services/blog.service';
+import {BlogRollComponent} from '../blog-roll/blog-roll.component';
 import {FormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
-import {BlogEntryFormComponent} from "../blog-entry-form/blog-entry-form";
+import {BlogEntryFormComponent} from "../blog-entry-form/blog-entry-form.component";
 
 describe('Application Shell', () => {
   beforeEach(() => {

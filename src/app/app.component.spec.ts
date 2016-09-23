@@ -2,14 +2,14 @@
 
 import {TestBed, async, getTestBed} from '@angular/core/testing';
 import {AppComponent} from './app.component';
-import {BlogRollComponent} from "./blog-roll/blog-roll";
-import {AppShellComponent} from "./app-shell/app-shell";
-import {BlogService} from "./services/blog-service";
-import {MarkdownService} from "./services/markdown-service";
+import {BlogRollComponent} from "./blog-roll/blog-roll.component";
+import {AppShellComponent} from "./app-shell/app-shell.component";
+import {BlogService} from "./services/blog.service";
+import {MarkdownService} from "./services/markdown.service";
 import {HttpModule, XHRBackend} from "@angular/http";
 import {FormsModule} from "@angular/forms";
 import {MockBackend} from "@angular/http/testing";
-import {BlogEntryFormComponent} from "./blog-entry-form/blog-entry-form";
+import {BlogEntryFormComponent} from "./blog-entry-form/blog-entry-form.component";
 
 describe('App: Angular2UnittestSamplesRelease', () => {
   beforeEach(() => {
