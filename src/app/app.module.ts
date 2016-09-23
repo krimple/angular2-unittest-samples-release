@@ -6,6 +6,7 @@ import {HttpModule} from '@angular/http';
 import {AppComponent} from './app.component';
 import {AppShellComponent} from './app-shell/app-shell';
 import {BlogRollComponent} from "./blog-roll/blog-roll";
+import {BlogEntryFormComponent} from "./blog-entry-form/blog-entry-form";
 
 
 @NgModule({
@@ -13,7 +14,7 @@ import {BlogRollComponent} from "./blog-roll/blog-roll";
     AppComponent,
     AppShellComponent,
     BlogRollComponent,
-
+    BlogEntryFormComponent
   ],
   imports: [
     BrowserModule,
