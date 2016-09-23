@@ -9,13 +9,15 @@ import {BlogService} from '../services/blog-service';
 import {BlogRollComponent} from '../blog-roll/blog-roll';
 import {FormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
+import {BlogEntryFormComponent} from "../blog-entry-form/blog-entry-form";
 
 describe('Application Shell', () => {
   beforeEach(() => {
      TestBed.configureTestingModule({
       declarations: [
         AppShellComponent,
-        BlogRollComponent
+        BlogRollComponent,
+        BlogEntryFormComponent
       ],
       providers: [
         BlogService,

@@ -9,7 +9,7 @@ import {MarkdownService} from '../services/markdown-service';
     template: `
    <div class="row">
      <div id="blog-editor-panel" class="col-sm-12" *ngIf="blog">
-      <blog-entry-form [blog]="blog" (submitted)="refresh()"></blog-entry-form> 
+      <blog-entry-form [blog]="blog" (submitted)="saveOrUpdate($event)"></blog-entry-form> 
      </div>
 
       <div id="blog-roll-panel" class="col-sm-12" *ngIf="!editing">
@@ -98,17 +98,19 @@ export class BlogRollComponent implements OnInit {
         this.blog = blog;
     }
 
-    saveBlogEntry(blog: BlogEntry) {
+    saveOrUpdate(blog: BlogEntry) {
+      console.log('got blog entry', blog);
         return this.blogService.saveBlog(blog)
             .subscribe( () => {
-              this.editing = false;
-              this.blog = null;
+              // save is complete, wait to close out (third callback)
             },
             (err) => {
                 alert(`Blog save failed. ${err}`);
             },
             () => {
-                this.refresh();
+              this.blog = null;
+              this.editing = false;
+              this.refresh();
             });
     }
 
