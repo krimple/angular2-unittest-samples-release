@@ -1,4 +1,4 @@
-import {MarkdownService} from './markdown-service';
+import {MarkdownService} from './markdown.service';
 
 import {
   TestBed, inject

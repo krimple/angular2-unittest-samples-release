@@ -1,8 +1,8 @@
 import {Observable} from 'rxjs/Rx';
-import {BlogRollComponent} from './blog-roll';
+import {BlogRollComponent} from './blog-roll.component';
 import {BlogEntry} from '../domain/blog-entry';
-import {BlogService} from '../services/blog-service';
-import {MarkdownService} from '../services/markdown-service';
+import {BlogService} from '../services/blog.service';
+import {MarkdownService} from '../services/markdown.service';
 
 class MockMarkdownService extends MarkdownService {
   toHtml(text: string): string {
@@ -65,7 +65,8 @@ describe('Blog Roll unit test', () => {
       .and.returnValue(Observable.of({ complete: true}));
 
     let entry = new BlogEntry('I am new', '<p>The content</p>', 'The content', undefined);
-    blogRoll.saveBlogEntry(entry);
+    blogRoll.saveOrUpdate(entry);
+
     expect(blogService.saveBlog).toHaveBeenCalledWith(entry);
   });
 

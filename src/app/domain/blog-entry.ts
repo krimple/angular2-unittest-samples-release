@@ -30,5 +30,7 @@ export class BlogEntry {
     return JSON.stringify(this);
   }
 
-
+  clone() {
+    return new BlogEntry(this.title, this.contentRendered, this.contentMarkdown, this.id);
+  }
 }

@@ -4,8 +4,9 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
 import {AppComponent} from './app.component';
-import {AppShellComponent} from './app-shell/app-shell';
-import {BlogRollComponent} from "./blog-roll/blog-roll";
+import {AppShellComponent} from './app-shell/app-shell.component';
+import {BlogRollComponent} from "./blog-roll/blog-roll.component";
+import {BlogEntryFormComponent} from "./blog-entry-form/blog-entry-form.component";
 
 
 @NgModule({
@@ -13,7 +14,7 @@ import {BlogRollComponent} from "./blog-roll/blog-roll";
     AppComponent,
     AppShellComponent,
     BlogRollComponent,
-
+    BlogEntryFormComponent
   ],
   imports: [
     BrowserModule,
