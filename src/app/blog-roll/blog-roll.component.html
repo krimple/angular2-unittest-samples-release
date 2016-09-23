@@ -2,16 +2,16 @@
                  [blog]="blog"
                  (submitted)="saveOrUpdate($event)"
                  (cancelled)="refresh()"></blog-entry-form>
-<div class="row">
-  <div id="blog-roll-panel" class="col-sm-12" *ngIf="!editing">
+<div class="row" *ngIf="!editing">
+  <div id="blog-roll-panel" class="col-sm-12">
     <p>
-      <a (click)="newBlogEntry()">
-        <i class="glyphicon glyphicon-plus-sign">
+      <a href="#" (click)="newBlogEntry()">
+        <i class="fa fa-2x fa-plus-circle">
           Add...
         </i>
       </a>
     </p>
-    <table class="table table-bordered table-condensed">
+    <table class="table table-bordered table-striped table-condensed">
       <tr>
         <th>Actions</th>
         <th>Title</th>
@@ -19,12 +19,12 @@
       </tr>
       <tr class="rows" *ngFor="let blog of blogs">
         <td>
-          <a href="#" (click)="editBlogEntry(blog)">
-            <i class="glyphicon glyphicon-edit"></i>
+          <a href="#" role="button" (click)="editBlogEntry(blog)">
+            <i class="fa fa-2x fa-edit"></i>
           </a>
           &nbsp;
-          <a href="#" (click)="deleteBlogEntry(blog)">
-            <i class="glyphicon glyphicon-remove"></i>
+          <a href="#" role="button" (click)="deleteBlogEntry(blog)">
+            <i class="fa fa-2x fa-trash"></i>
           </a>
         </td>
         <td class="table-cell">
