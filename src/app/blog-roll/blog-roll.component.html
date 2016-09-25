@@ -5,7 +5,7 @@
 <div class="row" *ngIf="!editing">
   <div id="blog-roll-panel" class="col-sm-12">
     <p>
-      <a href="#" (click)="newBlogEntry()">
+      <a href="#" id="new-blog-entry" (click)="newBlogEntry()">
         <i class="fa fa-2x fa-plus-circle">
           Add...
         </i>
@@ -19,11 +19,11 @@
       </tr>
       <tr class="rows" *ngFor="let blog of blogs">
         <td>
-          <a href="#" role="button" (click)="editBlogEntry(blog)">
+          <a href="#" class="edit-blog-entry" role="button" (click)="editBlogEntry(blog)">
             <i class="fa fa-2x fa-edit"></i>
           </a>
           &nbsp;
-          <a href="#" role="button" (click)="deleteBlogEntry(blog)">
+          <a href="#" class="delete-blog-entry" role="button" (click)="deleteBlogEntry(blog)">
             <i class="fa fa-2x fa-trash"></i>
           </a>
         </td>

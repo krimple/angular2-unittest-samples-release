@@ -25,3 +25,7 @@ node server        # runs on port 3009
 ## Browse to the app
 `http://localhost:4200`
 
+# Things off of baseline
+
+* had to do `npm i @types/es6-promise --save` to install es6 promise support in IDE
+* Installed the karma story reporter with `npm install --save-dev karma-story-reporter`
