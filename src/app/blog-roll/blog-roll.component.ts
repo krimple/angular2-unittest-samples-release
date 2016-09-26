@@ -6,7 +6,6 @@ import {MarkdownService} from '../services/markdown.service';
 
 @Component({
     selector: 'blog-roll',
-    providers: [BlogService, MarkdownService],
     templateUrl: 'blog-roll.component.html',
 })
 export class BlogRollComponent implements OnInit {

@@ -1,8 +1,9 @@
 import {
   TestBed,
-  getTestBed, async, inject
+  getTestBed,
+  async,
+  inject
 } from '@angular/core/testing';
-import {Injector} from '@angular/core';
 import {
   Headers, BaseRequestOptions,
   Response, HttpModule, Http, XHRBackend, RequestMethod
@@ -14,7 +15,7 @@ import {BlogEntry} from '../domain/blog-entry';
 import {BlogService} from './blog.service';
 
 describe('Blog Service', () => {
-  let testBed: TestBed;
+  let mockBackend: MockBackend;
 
   // All heed this block - it is required so that the test injector
   // is properly set up. Without doing this, you won't get the
@@ -23,27 +24,33 @@ describe('Blog Service', () => {
   // Also, you need to inject MockBackend as a provider before you wire
   // it to replace XHRBackend with the provide function!  So this is all
   // extremely important to set up right.
-  beforeEach(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [
         BlogService,
-        {provide: XHRBackend, useClass: MockBackend}
+        MockBackend,
+        BaseRequestOptions,
+        {
+          provide: Http,
+          deps: [MockBackend, BaseRequestOptions],
+          useFactory:
+            (backend: XHRBackend, defaultOptions: BaseRequestOptions) => {
+              return new Http(backend, defaultOptions);
+            },
+          deps: [MockBackend, BaseRequestOptions],
+       }
       ],
       imports: [
         HttpModule
       ]
     });
-    testBed = getTestBed();
-  });
+    mockBackend = getTestBed().get(MockBackend);
+  }));
 
   it('should get blogs', done => {
-    let mockBackend: MockBackend;
     let blogService: BlogService;
 
-    testBed.compileComponents().then(() => {
-      blogService = testBed.get(BlogService);
-      expect(blogService).toBeDefined();
-      mockBackend = testBed.get(XHRBackend);
+    getTestBed().compileComponents().then(() => {
       mockBackend.connections.subscribe(
         (connection: MockConnection) => {
           connection.mockRespond(new Response(
@@ -57,17 +64,21 @@ describe('Blog Service', () => {
               }
             )));
         });
-      blogService.getBlogs().subscribe((blogs: BlogEntry[]) => {
-        expect(blogs.length).toBeDefined();
-        expect(blogs.length).toEqual(1);
-        expect(blogs[0].id).toEqual(26);
-        done();
-      });
+
+        blogService = getTestBed().get(BlogService);
+        expect(blogService).toBeDefined();
+
+        blogService.getBlogs().subscribe((blogs: BlogEntry[]) => {
+            expect(blogs.length).toBeDefined();
+            expect(blogs.length).toEqual(1);
+            expect(blogs[0].id).toEqual(26);
+            done();
+        });
     });
   });
 
   it('should get blogs async',
-    async(inject([XHRBackend, BlogService], (mockBackend, blogService) => {
+    async(inject([MockBackend, BlogService], (mockBackend, blogService) => {
       mockBackend.connections.subscribe(
         (connection: MockConnection) => {
           connection.mockRespond(new Response(
@@ -91,7 +102,7 @@ describe('Blog Service', () => {
     })));
 
   it('should fetch a single blog entry by a key',
-    async(inject([XHRBackend, BlogService], (mockBackend, blogService) => {
+    async(inject([MockBackend, BlogService], (mockBackend, blogService) => {
       mockBackend.connections.subscribe(
         (connection: MockConnection) => {
 
@@ -120,7 +131,7 @@ describe('Blog Service', () => {
   })));
 
   it('should insert new blog entries',
-    async(inject([XHRBackend, BlogService], (mockBackend, blogService) => {
+    async(inject([MockBackend, BlogService], (mockBackend, blogService) => {
       mockBackend.connections.subscribe((connection: MockConnection) => {
         // is it the correct REST type for an insert? (POST)
         expect(connection.request.method).toBe(RequestMethod.Post);
@@ -137,7 +148,7 @@ describe('Blog Service', () => {
     })));
 
   it('should save updates to an existing blog entry',
-    async(inject([XHRBackend, BlogService], (mockBackend, blogService) => {
+    async(inject([MockBackend, BlogService], (mockBackend, blogService) => {
       mockBackend.connections.subscribe(connection => {
         // is it the correct REST type for an update? (PUT)
         expect(connection.request.method).toBe(RequestMethod.Put);
@@ -153,7 +164,7 @@ describe('Blog Service', () => {
     })));
 
   it('should delete an existing blog entry',
-    async(inject([XHRBackend, BlogService], (mockBackend, blogService) => {
+    async(inject([MockBackend, BlogService], (mockBackend, blogService) => {
       mockBackend.connections.subscribe(connection => {
         expect(connection.request.method).toBe(RequestMethod.Delete);
         connection.mockRespond(new ResponseOptions({status: 204}));

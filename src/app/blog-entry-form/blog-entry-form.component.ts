@@ -1,7 +1,7 @@
-import {Component, EventEmitter, OnInit, animate, trigger, state, style, transition, OnDestroy} from '@angular/core';
-import {BlogEntry} from "../domain/blog-entry";
-import {Input, Output} from "@angular/core/src/metadata/directives";
-import {MarkdownService} from "../services/markdown.service";
+import {Component, EventEmitter, OnInit} from '@angular/core';
+import {BlogEntry} from '../domain/blog-entry';
+import {Input, Output} from '@angular/core/src/metadata/directives';
+import {MarkdownService} from '../services/markdown.service';
 
 @Component({
   selector: 'blog-entry-form',
