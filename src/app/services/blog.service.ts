@@ -25,7 +25,6 @@ export class BlogService {
   }
 
   saveBlog(blog: BlogEntry): Observable<Response> {
-    console.log('saving', blog.json());
     if (blog.id) {
       return this.http.put('/server/api/blogs/' + blog.id, blog.json(), this.getOptions());
     } else {
@@ -40,7 +39,6 @@ export class BlogService {
   getBlog(id: number): any {
     return this.http.get('/server/api/blogs/' + id)
       .map((res: Response) => {
-        console.log(res);
         return BlogEntry.asBlogEntry(res.json());
       });
   }

@@ -16,7 +16,6 @@ class MockBlogService extends BlogService {
   }
 
   getBlogs() {
-    console.log('sending fake answers!');
     return Observable.of([
       {
         id: 26,

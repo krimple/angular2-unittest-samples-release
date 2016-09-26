@@ -6,7 +6,6 @@ import {MarkdownService} from '../services/markdown.service';
 
 @Component({
     selector: 'blog-roll',
-    providers: [BlogService, MarkdownService],
     templateUrl: 'blog-roll.component.html',
 })
 export class BlogRollComponent implements OnInit {
@@ -34,7 +33,6 @@ export class BlogRollComponent implements OnInit {
     loadBlogEntries() {
         this.blogService.getBlogs().subscribe(
             (data: Array<BlogEntry>) => {
-                console.log('blog data arrived', data);
                 this.blogs = data;
             },
             (error: Object) => {
@@ -60,7 +58,6 @@ export class BlogRollComponent implements OnInit {
     }
 
     saveOrUpdate(blog: BlogEntry) {
-      console.log('got blog entry', blog);
         return this.blogService.saveBlog(blog)
             .subscribe( () => {
               // save is complete, wait to close out (third callback)
@@ -93,5 +90,3 @@ export class BlogRollComponent implements OnInit {
         this.message = undefined;
     }
 }
-
-

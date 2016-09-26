@@ -7,6 +7,8 @@ import {AppComponent} from './app.component';
 import {AppShellComponent} from './app-shell/app-shell.component';
 import {BlogRollComponent} from "./blog-roll/blog-roll.component";
 import {BlogEntryFormComponent} from "./blog-entry-form/blog-entry-form.component";
+import {MarkdownService} from "./services/markdown.service";
+import {BlogService} from "./services/blog.service";
 
 
 @NgModule({
@@ -21,7 +23,7 @@ import {BlogEntryFormComponent} from "./blog-entry-form/blog-entry-form.componen
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [BlogService, MarkdownService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

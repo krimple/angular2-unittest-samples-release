@@ -4,7 +4,7 @@ import {Component} from '@angular/core';
   selector: 'app-shell',
   template: `
       <div class="container">
-        <blog-roll (edit)="setBlog(blog)"></blog-roll>
+        <blog-roll></blog-roll>
       </div>
     `,
 })
