@@ -36,8 +36,7 @@ describe('Blog Service', () => {
           useFactory:
             (backend: XHRBackend, defaultOptions: BaseRequestOptions) => {
               return new Http(backend, defaultOptions);
-            },
-          deps: [MockBackend, BaseRequestOptions],
+            }
        }
       ],
       imports: [
@@ -78,7 +77,7 @@ describe('Blog Service', () => {
   });
 
   it('should get blogs async',
-    async(inject([MockBackend, BlogService], (mockBackend, blogService) => {
+    async(inject([BlogService], (blogService) => {
       mockBackend.connections.subscribe(
         (connection: MockConnection) => {
           connection.mockRespond(new Response(
@@ -102,7 +101,7 @@ describe('Blog Service', () => {
     })));
 
   it('should fetch a single blog entry by a key',
-    async(inject([MockBackend, BlogService], (mockBackend, blogService) => {
+    async(inject([BlogService], (blogService) => {
       mockBackend.connections.subscribe(
         (connection: MockConnection) => {
 
@@ -131,7 +130,7 @@ describe('Blog Service', () => {
   })));
 
   it('should insert new blog entries',
-    async(inject([MockBackend, BlogService], (mockBackend, blogService) => {
+    async(inject([BlogService], (blogService) => {
       mockBackend.connections.subscribe((connection: MockConnection) => {
         // is it the correct REST type for an insert? (POST)
         expect(connection.request.method).toBe(RequestMethod.Post);
@@ -148,7 +147,7 @@ describe('Blog Service', () => {
     })));
 
   it('should save updates to an existing blog entry',
-    async(inject([MockBackend, BlogService], (mockBackend, blogService) => {
+    async(inject([BlogService], (blogService) => {
       mockBackend.connections.subscribe(connection => {
         // is it the correct REST type for an update? (PUT)
         expect(connection.request.method).toBe(RequestMethod.Put);
@@ -164,7 +163,7 @@ describe('Blog Service', () => {
     })));
 
   it('should delete an existing blog entry',
-    async(inject([MockBackend, BlogService], (mockBackend, blogService) => {
+    async(inject([BlogService], (blogService) => {
       mockBackend.connections.subscribe(connection => {
         expect(connection.request.method).toBe(RequestMethod.Delete);
         connection.mockRespond(new ResponseOptions({status: 204}));

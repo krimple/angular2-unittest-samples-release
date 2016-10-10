@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
 import {BlogEntry} from '../domain/blog-entry';
 import {BlogService} from '../services/blog.service';
 import {MarkdownService} from '../services/markdown.service';

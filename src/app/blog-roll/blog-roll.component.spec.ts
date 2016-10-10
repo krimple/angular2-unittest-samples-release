@@ -1,15 +1,13 @@
 import {
   TestBed,
-  ComponentFixture, getTestBed, fakeAsync, tick, inject, async
+  ComponentFixture, getTestBed, async
 } from '@angular/core/testing';
 import {
     HttpModule, ResponseOptions,
     Response, RequestMethod, Http,
     BaseRequestOptions, XHRBackend
-} from "@angular/http";
+} from '@angular/http';
 import {MockBackend, MockConnection} from '@angular/http/testing';
-import {Observable} from 'rxjs';
-
 import {BlogRollComponent} from './blog-roll.component';
 import {BlogService} from '../services/blog.service';
 import {MarkdownService} from '../services/markdown.service';
@@ -36,8 +34,7 @@ describe('Blog Roll Component...', () => {
                     useFactory:
                         (backend: XHRBackend, defaultOptions: BaseRequestOptions) => {
                             return new Http(backend, defaultOptions);
-                        },
-                    deps: [MockBackend, BaseRequestOptions],
+                        }
                 }
             ],
             imports: [
@@ -49,8 +46,8 @@ describe('Blog Roll Component...', () => {
         TestBed.compileComponents();
     }));
 
-  function mockBackendFunctions() {
-    mockBackend = getTestBed().get(MockBackend);
+  function mockBackendFunctions(testBed: TestBed) {
+    mockBackend = testBed.get(MockBackend);
     mockBackend.connections.subscribe(
       (connection: MockConnection) => {
         // TODO - simplify - when match fails it is null
@@ -113,39 +110,37 @@ describe('Blog Roll Component...', () => {
        });
   }
 
-  it('contains list of blog items by default', fakeAsync(() => {
-    getTestBed().compileComponents().then(() => {
-      mockBackendFunctions();
+  it('contains list of blog items by default', () => {
+      let testBed = getTestBed();
+      mockBackendFunctions(testBed);
 
       let fixture: ComponentFixture<BlogRollComponent> = getTestBed().createComponent(BlogRollComponent);
       fixture.componentInstance.ngOnInit();
-      tick();
-      let blogRoll = fixture.componentRef;
-      // we start with the blog roll panel visible
+
       fixture.detectChanges();
 
+      // blog roll should be visible, blog editor invisible
       expect(fixture.componentInstance.editing).toBe(false);
       expect(fixture.nativeElement.querySelector('#blog-editor-panel') === null).toBe(true);
       expect(fixture.nativeElement.querySelector('#blog-roll-panel') === null).toBe(false);
 
-      fixture.detectChanges();
+      // now let's see how many rows exist in our table (should be 2)
+      // and check the content that comes from the Http mock
       let trs = fixture.nativeElement.querySelectorAll('tr.rows');
       expect(trs.length).toBe(2);
       let tdTitleContent = trs[0].cells[1].textContent;
       let tdRenderedContent = trs[0].cells[2].textContent;
       expect(tdTitleContent).toContain('Article Title...');
       expect(tdRenderedContent).toContain('*Hi there*');
-    });
-  }));
+  });
 
-  it('should show blog editor div when New is clicked...', fakeAsync(() => {
-      mockBackendFunctions();
+  it('should show blog editor div when New is clicked...', () => {
+      let testBed = getTestBed();
+      mockBackendFunctions(testBed);
 
       let fixture: ComponentFixture<BlogRollComponent> = getTestBed().createComponent(BlogRollComponent);
       fixture.componentInstance.ngOnInit();
       fixture.detectChanges();
-
-      tick();
 
       // trigger the 'new button' link and swap visible panels
       fixture.nativeElement.querySelector('a#new-blog-entry').click();
@@ -153,33 +148,26 @@ describe('Blog Roll Component...', () => {
       // process the click event
       fixture.detectChanges();
 
-      tick();
-
       expect(fixture.componentInstance.editing).toBe(true);
       expect(fixture.nativeElement.querySelector('blog-entry-form') === null).toBe(false);
       expect(fixture.nativeElement.querySelector('#blog-roll-panel') === null).toBe(true);
-  }));
+  });
 
-  it('should open the editing pane if the edit button is clicked', fakeAsync(() => {
+  it('should open the editing pane if the edit button is clicked', () => {
     getTestBed().compileComponents().then(() => {
-      mockBackendFunctions();
+      let testBed = getTestBed();
+      mockBackendFunctions(testBed);
 
       let fixture: ComponentFixture<BlogRollComponent> = getTestBed().createComponent(BlogRollComponent);
       fixture.componentInstance.ngOnInit();
       // we start with the blog roll panel visible
       fixture.detectChanges();
 
-      tick();
-
       // trigger the 'new' button and swap visible panels
       fixture.nativeElement.querySelector('a.edit-blog-entry:first-of-type').click();
 
-      tick();
-
       // process the click event
       fixture.detectChanges();
-
-      tick();
 
       // make sure we have a 'blog' variable and that it is assigned
       // to the first blog element in the array since we clicked that one
@@ -192,69 +180,6 @@ describe('Blog Roll Component...', () => {
       expect(fixture.nativeElement.querySelector('blog-entry-form') === null).toBe(false);
       expect(fixture.nativeElement.querySelector('#blog-roll-panel') === null).toBe(true);
     });
-  }));
+  });
 
-  // TODO - this is a two-step test, and so the normal set of mock setups won't work
-  // since the first request will be a DELETE of /blogs/id and the second will be a
-  // GET of /blogs to refresh the list.  Disabling for now until after the conference
-  xit('should remove an entity if a delete button is clicked',
-    fakeAsync(inject([BlogService], (blogService) => {
-    getTestBed().compileComponents().then(() => {
-      mockBackendFunctions();
-
-      let fixture: ComponentFixture<BlogRollComponent> = getTestBed().createComponent(BlogRollComponent);
-
-       // steal the confirm function...
-      spyOn(blogService, 'deleteBlogEntry').and.callFake(() => {
-        return Observable.of(
-          new Response(new ResponseOptions({ body: "deleted", status: 201})));
-      });
-      let oldconfirm = window.confirm;
-      window['confirm'] = () => { return true };
-
-      fixture.componentInstance.ngOnInit();
-      tick();
-      // we start with the blog roll panel visible
-      fixture.detectChanges();
-
-      tick();
-      // trigger the 'delete' button and swap visible panels
-      fixture.nativeElement.querySelectorAll('a.delete-blog-entry')[0].click();
-
-      tick();
-      // process the click event
-      fixture.detectChanges();
-
-      tick();
-      // we have one less, so...
-      expect(fixture.componentInstance.blogs.length).toBe(1);
-      expect(fixture.componentInstance.editing).toBe(false);
-      expect(fixture.nativeElement.querySelector('blog-entry-form')).toBe(null);
-      expect(fixture.nativeElement.querySelector('#blog-roll-panel')).not.toBe(null);
-      expect(fixture.nativeElement.querySelectorAll('tr#rows').length).toBe(1);
-      window['confirm'] = oldconfirm;
-    });
-  })));
 });
-
-
-// alternative approaches
-
-/*spyOn(blogService, 'getBlogs').and.callFake(() => {
- return Observable.of([
- {
- id: 26,
- title: 'Article Title...',
- contentRendered: '<p><b>Hi there</b></p>',
- contentMarkdown: '*Hi there*'
- },
- {
- id: 97,
- title: 'Article2 Title...',
- contentRendered: '<p><b>Another blog entry</b></p>',
- contentMarkdown: '*Another blog entry*'
- }
- ]);
- });
- */
-

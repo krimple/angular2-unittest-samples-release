@@ -1,9 +1,7 @@
 import {AppShellComponent} from './app-shell.component';
 import {
-  async,
   fakeAsync,
   tick,
-  inject,
   TestBed,
   getTestBed,
   ComponentFixture
